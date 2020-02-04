@@ -6,12 +6,12 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app
 
 RUN  useradd -ms /bin/bash chat_room \
-  && chown website_watcher:website_watcher -R /usr/src/app \
+  && chown chat_room:chat_room -R /usr/src/app \
   && npm config set registry https://registry.npm.taobao.org \
   && npm install -g pm2 \ 
   && npm install 
 
-USER chat_root
+USER chat_room
 
 EXPOSE 3000
 
