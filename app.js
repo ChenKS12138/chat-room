@@ -3,6 +3,7 @@ const app = express();
 const httpServer = require("http").Server(app);
 const io = require("socket.io")(httpServer);
 const axios = require("axios").default;
+const urlencode = require('urlencode');
 
 const {Handler ,Message } = require('./handler/socket');
 
@@ -20,7 +21,7 @@ app.get('/translate',async (req, res) => {
   const { doctype = 'json', type = 'AUTO', i = 'test' } = req.query;
   const BASE_URL = 'http://fanyi.youdao.com/translate';
   try {
-    const { data } = await axios.get(`${BASE_URL}?doctype=${doctype}&type=${type}&i=${i}`);
+    const { data } = await axios.get(`${BASE_URL}?doctype=${doctype}&type=${type}&i=${urlencode(i)}`);
     res.json(data);
   }
   catch (e) {
