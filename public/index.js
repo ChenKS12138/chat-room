@@ -29,6 +29,8 @@ const listenMessage = () => {
           : message
       )
     );
+    var lis = document.querySelectorAll("#messages li");
+    lis[lis.length-1].scrollIntoView({behavior:"smooth"})
   });
 };
 
