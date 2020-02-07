@@ -5,11 +5,12 @@
   "author": "ChenKS12138 <749923710@qq.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.19.2",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "socket.io": "^2.3.0"
   },
-  "script":{
-    "start":"node app.js"
+  "script": {
+    "start": "node app.js"
   }
 }

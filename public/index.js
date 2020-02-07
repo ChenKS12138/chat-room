@@ -18,19 +18,45 @@ const initUsername = () => {
 // 监听消息
 const listenMessage = () => {
   // append the chat text message
+  const messages = document.getElementById("messages");
   socket.on(POST_MESSAGE, message => {
-    $("#messages").append(
-      $("<li>").html(
-        // 格式化消息
-        typeof message === "object"
-          ? `${moment(message.timestamp).format("H:mm:ss")} - ${
-              message.message
-            }`
-          : message
-      )
-    );
+    const translate = document.createElement("div");
+    const raw = document.createElement("div");
+    translate.innerHTML = "翻译中...";
+    translate.style.textIndent = "60px";
+    const liContainer = document.createElement("li");
+    raw.innerHTML = typeof message === "object"
+      ? `
+    ${moment(message.timestamp).format("H:mm:ss")} - ${typeof message.message === 'object' ? message.message.title + message.message.info:message.message}
+    `
+      : message;
+    
+    liContainer.appendChild(raw);
+    liContainer.appendChild(translate);
+    messages.appendChild(liContainer);
+    if (message.message && message.message.info) {
+      fetch(`/translate?i=${message.message.info}`)
+      .then(res => res.json())
+      .then(res => {
+        const data = res.translateResult[0][0];
+        if (data.src === data.tgt) {
+          throw "No Translate"
+        }
+        translate.innerHTML = data.tgt;
+      })
+      .catch(e => {
+        translate.remove();
+      })
+    }
+    else {
+      translate.remove();
+    }
+   
+    
     var lis = document.querySelectorAll("#messages li");
-    lis[lis.length-1].scrollIntoView({behavior:"smooth"})
+    if (lis.length) {
+      lis[lis.length-1].scrollIntoView({behavior:"smooth"})
+    }
   });
 };
 

@@ -29,7 +29,7 @@ class Handler{
 
   // 发送消息
   postMessage = message => {
-    this.emitMessage("<strong>" + this.username + "</strong>: " + message);
+    this.emitMessage({ title:"<strong>" + this.username + "</strong>: " ,info: message });
   };
 
   // 断开连接
